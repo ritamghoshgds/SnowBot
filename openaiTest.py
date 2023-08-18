@@ -3,7 +3,7 @@ import snowflake_connector as sc
 
 # with open("API_OPENAI.txt",'r') as key:
 #     apiKey = key.read()
-sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','POC') AS schema_details;")
+sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;")
 tableStructText = sch['SCHEMA_DETAILS'][0] #sch.replace('\\n','\n').replace('\\t','  ')
 tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables, Only Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
 openai.api_key = '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'
