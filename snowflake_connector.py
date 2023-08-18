@@ -9,7 +9,7 @@ def fetch_and_display_data(query):
     snowflake_account = "eygds-lnd_dna_az_1"#"ynxsocx-fz48656"
     snowflake_warehouse = "LLM_WH"#"COMPUTE_WH"
     snowflake_database = "LLM_CHATBOT"#"SFPOC"
-    snowflake_schema = "POC"
+    snowflake_schema = "DATA"
     # Create a Snowflake connection
     conn = snowflake.connector.connect(
         user=snowflake_user,
