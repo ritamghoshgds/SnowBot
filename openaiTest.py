@@ -29,7 +29,6 @@ def generate_code(user_input):
 
     # Generate the code by sending the conversation and instruction to the model
     response = openai.ChatCompletion.create(
-        verify=False,
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": system_message},
