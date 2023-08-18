@@ -9,10 +9,10 @@ tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance 
 openai.api_key = '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'
 
 def find_SQL_substring(main_string):
-    #start_index = main_string.find('```sql') + 7
-    start_index = main_string.find('SELECT')
-    #end_index = main_string.find('```', start_index)
-    end_index = main_string.find(';', start_index) +1
+    start_index = main_string.find('```') + 7
+    #start_index = main_string.find('SELECT')
+    end_index = main_string.find('```', start_index)
+    #end_index = main_string.find(';', start_index) +1
 
     if start_index != -1 and end_index != -1:
         substring = main_string[start_index:end_index]
