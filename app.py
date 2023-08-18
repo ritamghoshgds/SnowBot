@@ -5,13 +5,7 @@ import search_app, kpi_page
 
 # Function to process the prompt and return the query
 def process_prompt(prompt):
-    #code = openaiTest.Main2(prompt)
-    if(prompt=='1'):
-        code = "select 1;"
-    else:
-        code = "SELECT * FROM poc.USER_DETAILS;"
-    time.sleep(1)
-    print("process_prompt")
+    code = openaiTest.Main2(prompt)
     return code
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
