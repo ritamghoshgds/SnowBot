@@ -25,6 +25,8 @@ def kpi_page():
         if st.session_state.kpires[0] == "":
             st.session_state.kpires[0] = openaiTest.Main2(
                 "Find Claims Settlement Ratio: Calculation: (Number of Claims Settled / Number of Claims Filed) * 100 Supported by: Claims, ClaimsHistory tables")
+        print(st.session_state.kpires[0])
+        st.code(st.session_state.kpires[0])
         st.dataframe(execute_query(st.session_state.kpires[0]))
 
     if st.button("Underwriting Expense Ratio"):
