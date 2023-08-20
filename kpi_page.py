@@ -16,6 +16,18 @@ def execute_query(query):
 
 # Page 2: KPI Page
 def kpi_page():
+    st.markdown(
+        """
+        <style>
+            section.main.css-uf99v8.ea3mdgi5
+                {background-color: #2E2E38;}
+            [role="alert"] {
+                background-color: #C4C4CD;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     st.title("Important KPIs")
     st.write("Click on buttons to view respective queries & results for below KPIs\n")
 
