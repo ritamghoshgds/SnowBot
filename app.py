@@ -15,6 +15,40 @@ def execute_query(query):
 
 # Streamlit App
 def main():
+    st.markdown(
+        """
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+        
+        div.css-6qob1r.eczjsme3{
+            background-color: #747480;
+        }
+        h1, h3{
+            color: #FFE600;
+            font-family: 'Roboto', sans-serif;
+        }
+        div.st-c5.st-cj.st-ck.st-ae.st-af.st-ag.st-ah.st-ai.st-aj.st-cl.st-cm{
+            color: #F6F6FA
+        }
+        p{
+            color: #F6F6FA;
+            font-family: 'Roboto', sans-serif;
+        }
+        button p{
+            color: #2E2E38;
+            font-weight: 600;
+            font-family: 'Roboto', sans-serif;
+        }
+        .stButton button { background-color: #C4C4CD}
+        [role="radiogroup"] {
+            color: #000;
+            font-weight: 600;
+            font-family: 'Roboto', sans-serif;;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     st.sidebar.title("Navigation")
     page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
 
