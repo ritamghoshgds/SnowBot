@@ -15,8 +15,19 @@ def execute_query(query):
 
 # Main Streamlit app
 def main():
-
-    st.title('SnowSQL ChatBot')
+    st.markdown(
+        """
+        <style>
+            section.main.css-uf99v8.ea3mdgi5
+                {background-color: #2E2E38;}
+            [data-testid="stText"] {
+                color: #C4C4CD;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    st.title('SQL ChatBot: Insurance')
 
     # Input text area for entering the prompt
     if 'step' not in st.session_state:
