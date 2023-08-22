@@ -2,20 +2,28 @@ import time
 import streamlit as st
 import openaiTest
 import snowflake_connector
+import csv
+import pandas as pd
+import random
 
-# Function to process the prompt and return the query
-def process_prompt(prompt):
-    code = openaiTest.Main2(prompt)
-    return code
+# Read CSV file
+csv_file = open('kpi.csv', 'r')
+csv_reader = csv.DictReader(csv_file)
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
 def execute_query(query):
     result = snowflake_connector.fetch_and_display_data(query)
     return result
 
+def fetch_query(prompt):
+    for row in csv_reader:
+        if row["Prompt"] == prompt:
+            return row["Query"]
 
 # Page 2: KPI Page
 def kpi_page():
+    if 'query_outputs' not in st.session_state:
+        st.session_state.query_outputs = []
     st.markdown(
         """
         <style>
@@ -28,87 +36,60 @@ def kpi_page():
         """,
         unsafe_allow_html=True
     )
+
     st.title("Important KPIs")
     st.write("Click on buttons to view respective queries & results for below KPIs\n")
 
     if 'kpires' not in st.session_state:
-        st.session_state.kpires = ["","","","","","","","","","",""]
+        st.session_state.kpires = [""] * 11
 
-    if st.button("Claims Settlement Ratio"):
-        if st.session_state.kpires[0] == "":
-            st.session_state.kpires[0] = openaiTest.Main2(
-                "Find Claims Settlement Ratio: Calculation: (Number of Claims Settled / Number of Claims Filed) * 100 Supported by: Claims, ClaimsHistory tables. Output should be a single query with a single aggregated output")
-        #print(st.session_state.kpires[0])
-        st.code(st.session_state.kpires[0])
-        st.dataframe(execute_query(st.session_state.kpires[0]))
+    # Buttons layout
+    buttons = [
+        "Claims Settlement Ratio", "Underwriting Expense Ratio",
+        "Average Underwriting Risk Score", "Average Age of Policies",
+        "Average Age of Claims", "Claim Loss Ratio",
+        "Average Response Time for Claims Processing", "Claims Closed Ratio",
+        "New Business Premiums", "Average Policy Duration",
+        "Average Customer Lifetime Value (CLV)"
+    ]
 
-    if st.button("Underwriting Expense Ratio"):
-        if st.session_state.kpires[1] == "":
-            st.session_state.kpires[1] = openaiTest.Main2(
-                "Find Underwriting Expense Ratio: Calculation: (Total Underwriting Expenses / Total Earned Premium) * 100 Supported by: Underwriting, PremiumPayments tables.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[1])
-        st.dataframe(execute_query(st.session_state.kpires[1]))
+    rows = [buttons[i:i + 4] for i in range(0, len(buttons), 4)]
 
-    if st.button("Average Underwriting Risk Score"):
-        if st.session_state.kpires[2] == "":
-            st.session_state.kpires[2] = openaiTest.Main2(
-                "Find Average Underwriting Risk Score: Calculation: Total Risk Score / Number of Underwriting Cases Supported by: Underwriting table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[2])
-        st.dataframe(execute_query(st.session_state.kpires[2]))
+    for row in rows:
+        cols = st.columns(len(row))
+        st.markdown("<div class='row-center'>", unsafe_allow_html=True)
+        for col, button_text in zip(cols, row):
+            if col.button(button_text):
+                button_index = buttons.index(button_text)
+                if st.session_state.kpires[button_index] == "":
+                    st.session_state.kpires[button_index] = fetch_query(button_text)
+                st.session_state.query_outputs.append(button_text + ":\n" + st.session_state.kpires[button_index])
+                result = execute_query(st.session_state.kpires[button_index])
+                st.session_state.query_outputs.append(result)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-    if st.button("Average Age of Policies"):
-        if st.session_state.kpires[3] == "":
-            st.session_state.kpires[3] = openaiTest.Main2(
-                "Find Average Age of Policies: Calculation: Average of (Current Date - Policy Start Date) for all policies Supported by: Policy table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[3])
-        st.dataframe(execute_query(st.session_state.kpires[3]))
+    # Display query results
+    if st.session_state.query_outputs:
+        st.title("Query Results:")
+        for i in range(len(st.session_state.query_outputs)):
+            if i % 2 == 0:
+                items = st.session_state.query_outputs[i].split(':')
+                st.write(items[0])
+                st.code(items[1])
+            else:
+                st.dataframe(st.session_state.query_outputs[i])
+                df = pd.DataFrame(st.session_state.query_outputs[i])
+                csv = df.to_csv()
+                items = st.session_state.query_outputs[i - 1].split(':')
+                st.download_button(
+                    label="Download CSV",
+                    data=csv,
+                    file_name=f"{items[0]}.csv",
+                    key=random.random()
+                )
+                separator = "---"
+                st.text(separator)
 
-    if st.button("Average Age of Claims"):
-        if st.session_state.kpires[4] == "":
-            st.session_state.kpires[4] = openaiTest.Main2(
-                "Find Average Age of Claims: Calculation: Average of (Current Date - Claim Date) for all claims Supported by: Claims table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[4])
-        st.dataframe(execute_query(st.session_state.kpires[4]))
-
-    if st.button("Claim Loss Ratio"):
-        if st.session_state.kpires[5] == "":
-            st.session_state.kpires[5] = openaiTest.Main2(
-                "Find Claim Loss Ratio: Calculation: (Total Claims Amount / Total Premium Collected) * 100 Supported by: Claims, PremiumPayments tables.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[5])
-        st.dataframe(execute_query(st.session_state.kpires[5]))
-
-    if st.button("Average Response Time for Claims Processing"):
-        if st.session_state.kpires[6] == "":
-            st.session_state.kpires[6] = openaiTest.Main2(
-                "Find Average Response Time for Claims Processing: Calculation: Average of (Claim Processed Date - Claim Date) for all claims Supported by: Claims table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[6])
-        st.dataframe(execute_query(st.session_state.kpires[6]))
-
-    if st.button("Claims Closed Ratio"):
-        if st.session_state.kpires[7] == "":
-            st.session_state.kpires[7] = openaiTest.Main2(
-                "Find Claims Closed Ratio: Calculation: (Number of Claims Closed / Total Number of Claims) * 100 Supported by: Claims table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[7])
-        st.dataframe(execute_query(st.session_state.kpires[7]))
-
-    if st.button("New Business Premiums"):
-        if st.session_state.kpires[8] == "":
-            st.session_state.kpires[8] = openaiTest.Main2(
-                "Find New Business Premiums: Calculation: Sum of Premiums for New Policies Supported by: PremiumPayments table.  Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[8])
-        st.dataframe(execute_query(st.session_state.kpires[8]))
-
-    if st.button("Average Policy Duration"):
-        if st.session_state.kpires[9] == "":
-            st.session_state.kpires[9] = openaiTest.Main2(
-                "Find Average Policy Duration: Calculation: Average of (Policy End Date - Policy Start Date) for all policies Supported by: Policy table. Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[9])
-        st.dataframe(execute_query(st.session_state.kpires[9]))
-
-    if st.button("Average Customer Lifetime Value (CLV)"):
-        if st.session_state.kpires[10] == "":
-            st.session_state.kpires[10] = openaiTest.Main2(
-                "Find Average Customer Lifetime Value (CLV): Calculation: Sum of Premiums from Renewals / Number of Policies Renewed Supported by: Renewals table. Output should be a single query with a single aggregated output")
-        st.code(st.session_state.kpires[10])
-        st.dataframe(execute_query(st.session_state.kpires[10]))
-
+        if st.button("Clear Chat"):
+            st.session_state.query_outputs=[]
+            st.experimental_rerun()
