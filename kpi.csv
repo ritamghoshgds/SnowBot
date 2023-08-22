@@ -1,0 +1,12 @@
+Prompt,Query
+Claims Settlement Ratio,select * from data.claims limit 10
+Underwriting Expense Ratio,select * from data.claims limit 11
+Average Underwriting Risk Score,select * from data.claims limit 12
+Average Age of Policies,select * from data.claims limit 13
+Average Age of Claims,select * from data.claims limit 14
+Claim Loss Ratio,select * from data.claims limit 15
+Average Response Time for Claims Processing,select * from data.claims limit 16
+Claims Closed Ratio,select * from data.claims limit 17
+New Business Premiums,select * from data.claims limit 18
+Average Policy Duration,select * from data.claims limit 19
+Average Customer Lifetime Value (CLV),select * from data.claims limit 20
