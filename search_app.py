@@ -79,6 +79,7 @@ def main():
         if st.button('Reload'):
             st.write("Are you sure? (PRESS Reload Again)")
             st.session_state.step = 1
+        st.session_state.result = None
 
 if __name__ == "__main__":
     main()
