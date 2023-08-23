@@ -25,7 +25,12 @@ def generate_code(user_input):
     system_message = f"User: {user_input}\nAssistant:"
 
     # Define the instruction for the model
-    instruction = "Please generate the SQL code snippet required for the given task. The whole code snippet must be enclosed within 2 '```' symbol. Remember all the tables and their column names. Include a few additional coulmns related to given attributes."
+    instruction = """1. Please generate the SQL code snippet required for the given task. 
+    2. The whole code snippet must be enclosed within 2 '```' symbol. 
+    3. Remember all the tables and their column names. 
+    4. Include a few additional coulmns related to given attributes.
+    5. Please use ChatGPT 4.0.
+    6. Use minimum SQL Joins and group by."""
 
     # Generate the code by sending the conversation and instruction to the model
     response = openai.ChatCompletion.create(
