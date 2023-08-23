@@ -43,12 +43,17 @@ def kpi_page():
 
     # Buttons layout
     buttons = [
-        "Claims Settlement Ratio", "Underwriting Expense Ratio",
-        "Average Underwriting Risk Score", "Average Age of Policies",
-        "Average Age of Claims", "Claim Loss Ratio",
-        "Average Response Time for Claims Processing", "Claims Closed Ratio",
-        "New Business Premiums", "Average Policy Duration",
-        "Average Customer Lifetime Value (CLV)"
+        'Loss Ratio',
+        'Expense Ratio'
+        'Retention Rate',
+        'Average Premium per Policy',
+        'Loss Adjustment Expense Ratio (LAE Ratio)',
+        'Underwriting Expense Ratio',
+        'Average Response Time for Claims Processing',
+        'Average Customer Lifetime Value (CLV)',
+        'Average New Business Premiums',
+        'Average Policy Duration or Exposure',
+        'Premium Growth Rate'
     ]
 
     rows = [buttons[i:i + 4] for i in range(0, len(buttons), 4)]
