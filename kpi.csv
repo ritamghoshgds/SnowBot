@@ -1,12 +1,78 @@
 Prompt,Query
-Claims Settlement Ratio,select * from data.claims limit 10
-Underwriting Expense Ratio,select * from data.claims limit 11
-Average Underwriting Risk Score,select * from data.claims limit 12
-Average Age of Policies,select * from data.claims limit 13
-Average Age of Claims,select * from data.claims limit 14
-Claim Loss Ratio,select * from data.claims limit 15
-Average Response Time for Claims Processing,select * from data.claims limit 16
-Claims Closed Ratio,select * from data.claims limit 17
-New Business Premiums,select * from data.claims limit 18
-Average Policy Duration,select * from data.claims limit 19
-Average Customer Lifetime Value (CLV),select * from data.claims limit 20
+Loss Ratio,"WITH total_claims AS (
+  SELECT SUM(AMOUNT) AS total_amount
+  FROM DATA.CLAIMS
+),
+
+total_premium AS (
+  SELECT SUM(AMOUNT) AS total_premium
+  FROM DATA.PREMIUMPAYMENTS
+)
+
+SELECT (tc.total_amount / tp.total_premium) * 100 AS ratio
+FROM total_claims tc, total_premium tp;"
+Expense Ratio,"WITH total_expenses AS (
+  SELECT SUM(p.AMOUNT) AS total_expenses
+  FROM DATA.PREMIUMPAYMENTS p
+  JOIN DATA.CANCELLATIONS c ON c.POLICY_ID = p.POLICY_ID
+),
+
+earned_premium AS (
+  SELECT SUM(p.AMOUNT) AS total_earned_premium
+  FROM DATA.PREMIUMPAYMENTS p
+  LEFT JOIN DATA.CANCELLATIONS c ON c.POLICY_ID = p.POLICY_ID
+  WHERE c.CANCELLATION_ID IS NULL
+)
+
+SELECT (te.total_expenses / ep.total_earned_premium) * 100 AS operating_expenses_ratio
+FROM total_expenses te, earned_premium ep;"
+Retention Rate,"WITH renewed_policies AS (
+    SELECT COUNT(DISTINCT POLICY_ID) AS num_renewed_policies
+    FROM RENEWALS
+),
+total_policies AS (
+    SELECT COUNT(DISTINCT POLICY_ID) AS total_num_policies
+    FROM POLICY
+),
+percentage_renewed AS (
+    SELECT (renewed_policies.num_renewed_policies / total_policies.total_num_policies) * 100 AS renewal_percentage
+    FROM renewed_policies, total_policies
+)
+SELECT percentage_renewed.renewal_percentage
+FROM percentage_renewed;"
+Average Premium per Policy,"SELECT 
+    SUM(P.PAYMENT_AMOUNT) AS Total_Earned_Premium,
+    COUNT(DISTINCT P.POLICY_ID) AS Total_Number_of_Policies
+FROM 
+    DATA.PREMIUMPAYMENTS P"
+Loss Adjustment Expense Ratio (LAE Ratio),"SELECT
+  SUM(CH.AMOUNT) AS Total_Loss_Adjustment_Expenses,
+  SUM(C.AMOUNT) AS Total_Claims_Amount,
+  (SUM(CH.AMOUNT) / SUM(C.AMOUNT)) * 100 AS Adjusted_Claims_Ratio
+FROM
+  DATA.CLAIMS C
+INNER JOIN
+  DATA.CLAIMSHISTORY CH ON C.CLAIM_ID = CH.CLAIM_ID"
+Underwriting Expense Ratio,"SELECT
+    SUM(u.RISK_SCORE * p.AMOUNT) / SUM(p.AMOUNT) * 100 AS UNDERWRITING_EXPENSES_TO_EARNED_PREMIUM_RATIO
+FROM
+    DATA.UNDERWRITING u
+    INNER JOIN DATA.POLICY p ON u.POLICY_ID = p.POLICY_ID
+    INNER JOIN DATA.PREMIUMPAYMENTS pp ON p.POLICY_ID = pp.POLICY_ID"
+Average Response Time for Claims Processing,"SELECT AVG(DATEDIFF('day', C.CLAIM_DATE, CH.CLAIM_PROCESSED_DATE)) AS AVERAGE_TIME_TO_PROCESS
+FROM CLAIMS C
+JOIN CLAIMSHISTORY CH ON C.CLAIM_ID = CH.CLAIM_ID
+"
+Average Customer Lifetime Value (CLV),"SELECT SUM(RE.RENEWAL_AMOUNT) / COUNT(DISTINCT RE.POLICY_ID) AS RenewalPremiumToPoliciesRatio
+FROM RENEWALS RE;"
+Average New Business Premiums,"SELECT p.POLICY_NUMBER, p.START_DATE, p.END_DATE, pp.POLICY_ID, SUM(pp.AMOUNT) AS TOTAL_PREMIUM
+FROM POLICY p
+JOIN PREMIUMPAYMENTS pp ON p.POLICY_ID = pp.POLICY_ID
+WHERE p.START_DATE = (SELECT MIN(START_DATE) FROM POLICY)
+GROUP BY p.POLICY_NUMBER, p.START_DATE, p.END_DATE, pp.POLICY_ID;"
+Average Policy Duration or Exposure,"SELECT AVG(DATEDIFF('day', START_DATE, END_DATE)) AS AVERAGE_DURATION
+FROM DATA.POLICY;"
+Premium Growth Rate,select * from data.claims limit 20
+,
+,
+
