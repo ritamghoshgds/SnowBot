@@ -88,6 +88,6 @@ def kpi_page():
                 separator = "---"
                 st.text(separator)
 
-        if st.button("Clear Chat"):
+        if st.button("Back"):
             st.session_state.query_outputs=[]
             st.experimental_rerun()
