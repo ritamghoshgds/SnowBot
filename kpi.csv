@@ -40,11 +40,9 @@ percentage_renewed AS (
 )
 SELECT percentage_renewed.renewal_percentage
 FROM percentage_renewed;"
-Average Premium per Policy,"SELECT 
-    SUM(P.PAYMENT_AMOUNT) AS Total_Earned_Premium,
-    COUNT(DISTINCT P.POLICY_ID) AS Total_Number_of_Policies
-FROM 
-    DATA.PREMIUMPAYMENTS P"
+Average Premium per Policy,"SELECT (SUM(AMOUNT) / COUNT(DISTINCT POLICY_ID)) 
+AS Average_Premium_per_Policy
+FROM DATA.PREMIUMPAYMENTS;"
 Loss Adjustment Expense Ratio (LAE Ratio),"SELECT
   SUM(CH.AMOUNT) AS Total_Loss_Adjustment_Expenses,
   SUM(C.AMOUNT) AS Total_Claims_Amount,
