@@ -44,7 +44,7 @@ def kpi_page():
     # Buttons layout
     buttons = [
         'Loss Ratio',
-        'Expense Ratio'
+        'Expense Ratio',
         'Retention Rate',
         'Average Premium per Policy',
         'Loss Adjustment Expense Ratio (LAE Ratio)',
