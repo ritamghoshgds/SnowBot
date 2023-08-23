@@ -6,19 +6,17 @@ import csv
 import pandas as pd
 import random
 
-# Read CSV file
-csv_file = open('kpi.csv', 'r')
-csv_reader = csv.DictReader(csv_file)
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
 def execute_query(query):
     result = snowflake_connector.fetch_and_display_data(query)
     return result
 
+df = pd.read_csv("kpi.csv")
+
 def fetch_query(prompt):
-    for row in csv_reader:
-        if row["Prompt"] == prompt:
-            return row["Query"]
+    filtered_data = df[df['Prompt'] == prompt]
+    return filtered_data['Query'].values[0]
 
 # Page 2: KPI Page
 def kpi_page():
