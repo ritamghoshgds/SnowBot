@@ -47,10 +47,10 @@ def kpi_page():
         'Expense Ratio',
         'Retention Rate',
         'Average Premium per Policy',
-        'Loss Adjustment Expense Ratio (LAE Ratio)',
+        'Loss Adjustment Expense Ratio',
         'Underwriting Expense Ratio',
         'Average Response Time for Claims Processing',
-        'Average Customer Lifetime Value (CLV)',
+        'Average Customer Lifetime Value',
         'Average New Business Premiums',
         'Average Policy Duration or Exposure',
         'Premium Growth Rate'
@@ -93,6 +93,6 @@ def kpi_page():
                 separator = "---"
                 st.text(separator)
 
-        if st.button("Back"):
+        if st.button("Clear"):
             st.session_state.query_outputs=[]
             st.experimental_rerun()
