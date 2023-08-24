@@ -78,12 +78,11 @@ def main():
         st.subheader("Result Table:")
         st.dataframe(st.session_state.result, width=1500)
         st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
-        st.session_state.query = None
         if st.button('Reload'):
-            st.write("Are you sure? (PRESS Reload Again)")
-            st.session_state.step = 1
             st.session_state.result = None
             st.session_state.query = None
+            st.write("Are you sure? (PRESS Reload Again)")
+            st.session_state.step = 1
 
 if __name__ == "__main__":
     main()
