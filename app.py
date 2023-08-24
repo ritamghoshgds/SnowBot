@@ -13,6 +13,13 @@ def execute_query(query):
     result = snowflake_connector.fetch_and_display_data(query)
     return result
 
+# Function to simulate user authentication
+def authenticate(username, password):
+    # Replace with your authentication logic
+    if username == "LLMChatbot" and password == "snowflake":
+        return True
+    return False
+
 # Streamlit App
 def main():
     st.markdown(
@@ -49,13 +56,34 @@ def main():
         """,
         unsafe_allow_html=True
     )
-    st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
+    
+    # Check if the user is authenticated, show login if not
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
 
-    if page == "Search":
-        search_app.main()
-    elif page == "Popular KPIs":
-        kpi_page.kpi_page()
+    if not st.session_state.authenticated:
+        st.title("Login")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        if st.button("Login"):
+            st.write("Click again to Hide")
+            if authenticate(username, password):
+                st.session_state.authenticated = True
+            else:
+                st.error("Authentication failed!")
+
+    # Main content
+    if st.session_state.authenticated:
+        st.sidebar.title("Navigation")
+        page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
+        if page == "Search":
+            search_app.main()
+        elif page == "Popular KPIs":
+            kpi_page.kpi_page()
+        logout_button = st.sidebar.button("Logout")
+        if logout_button:
+            st.sidebar.write('Are you sure you want to logout?')
+            st.session_state.authenticated = False
 
 if __name__ == "__main__":
     main()
