@@ -2,6 +2,8 @@ import time
 import streamlit as st
 import openaiTest
 import snowflake_connector
+import pandas as pd
+import random
 
 # Function to process the prompt and return the query
 def process_prompt(prompt):
@@ -84,6 +86,14 @@ def main():
         st.session_state.done2 = False
         st.subheader("Result Table:")
         st.dataframe(st.session_state.result, width=1500)
+        df = pd.DataFrame(st.session_state.result)
+        csv = df.to_csv()
+        st.download_button(
+            label="Download CSV",
+            data=csv,
+            file_name=f"search_output_{st.session_state.count}.csv",
+            key=random.random()
+        )
         st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
         if st.button('Reload'):
             st.session_state.result = None
