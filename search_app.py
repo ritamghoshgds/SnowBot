@@ -29,7 +29,16 @@ def main():
     )
     st.title('SQL ChatBot: Insurance')
 
- # Display a brief summary message with typing effect
+    # Input text area for entering the prompt
+    if 'step' not in st.session_state:
+        st.session_state.step = 1
+
+    if st.session_state.step == 1:
+        # Input text area for entering the prompt
+        last_prompt = st.session_state.get('prompt', "")
+        prompt = st.text_input("Enter your prompt here", value=last_prompt)
+        
+     # Display a brief summary message with typing effect
     summary_message = "Welcome to the SnowSQL ChatBot!\nThis chatbot can assist you with generating and executing SQL queries"
     typing_placeholder = st.empty()
     
@@ -45,17 +54,7 @@ def main():
         if line_index < len(lines) - 1:
             typing_placeholder.text("\n")
             time.sleep(0.1)  # Add a shorter pause between lines
-
-
-    # Input text area for entering the prompt
-    if 'step' not in st.session_state:
-        st.session_state.step = 1
-
-    if st.session_state.step == 1:
-        # Input text area for entering the prompt
-        last_prompt = st.session_state.get('prompt', "")
-        prompt = st.text_input("Enter your prompt here", value=last_prompt)
-
+            
         # Button to send the prompt
         if st.button('Send'):
             st.session_state.step = 2
