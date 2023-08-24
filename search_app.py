@@ -28,6 +28,13 @@ def main():
         unsafe_allow_html=True
     )
     st.title('SQL ChatBot: Insurance')
+    st.markdown("## How to Use the Search Bot")
+    st.write("1. Enter your query prompt in the text input box provided.")
+    st.write("2. Click the 'Send' button to generate the SQL query based on your prompt.")
+    st.write("3. The generated SQL query will be displayed. Review it to ensure it matches your intent.")
+    st.write("4. If you approve the query, click the 'Execute' button to execute it.")
+    st.write("5. The result table will be displayed below. You can review the query results.")
+    st.write("6. If you want to refresh the prompt and start over, click the 'Reload' button.")
     
     # Input text area for entering the prompt
     if 'step' not in st.session_state:
