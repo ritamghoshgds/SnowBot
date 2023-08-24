@@ -27,7 +27,7 @@ def generate_code(user_input):
     # Define the instruction for the model
     instruction = """1. Please generate the SQL code snippet required for the given task. 
     2. The whole code snippet must be enclosed within 2 '```' symbol. 
-    3. Column and table names should be accurate and must be from the "LLM_CHATBOT" database. 
+    3. Column and table names should be accurate and must be from the "DATA" schema. 
     4. Query must be accurate, executable and not too long.
     5. Please use ChatGPT 4.0.
     6. Use minimum SQL Joins and group by."""
@@ -39,7 +39,7 @@ def generate_code(user_input):
             {"role": "system", "content": system_message},
             {"role": "user", "content": user_input},
             {"role": "assistant", "content": instruction},
-        ]
+        ], temperature = 0.2
     )
     # Get the assistant's reply (code snippet)
     assistant_reply = response.choices[0].message.content
