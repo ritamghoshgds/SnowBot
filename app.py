@@ -22,14 +22,15 @@ def authenticate(username, password):
 
 # Streamlit App
 def main():
-    st.markdown("""
-        <style>
-        .custom-icon {
-            font-size: 24px;
-            cursor: pointer;
-        }
-        </style>
-        """,unsafe_allow_html=True)
+    st.markdown(
+    """
+    <style>
+    .custom-icon {
+        font-size: 24px;
+        cursor: pointer;
+    }
+    </style>
+    """,unsafe_allow_html=True)
     # Check if the user is authenticated, show login if not
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
