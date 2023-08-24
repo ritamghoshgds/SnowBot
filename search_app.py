@@ -28,7 +28,7 @@ def main():
         unsafe_allow_html=True
     )
     st.title('SQL ChatBot: Insurance')
-    st.markdown("#### How to Use the Search Bot")
+    st.markdown("### How to Use the Search Bot")
     st.text("1. Enter your query prompt in the text input box provided.")
     st.text("2. Click the 'Send' button to generate the SQL query based on your prompt.")
     st.text("3. The generated SQL query will be displayed. Review it to ensure it matches your intent.")
