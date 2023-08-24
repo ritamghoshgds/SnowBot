@@ -70,6 +70,8 @@ def main():
         elif st.button("No"):
             st.write("Sure you don't? (Press No Again)")
             st.session_state.step = 1
+            st.session_state.result = None
+            st.session_state.query = None
 
     if st.session_state.step == 3:
         st.session_state.done2 = False
@@ -79,7 +81,8 @@ def main():
         if st.button('Reload'):
             st.write("Are you sure? (PRESS Reload Again)")
             st.session_state.step = 1
-        st.session_state.result = None
+            st.session_state.result = None
+            st.session_state.query = None
 
 if __name__ == "__main__":
     main()
