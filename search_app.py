@@ -30,7 +30,7 @@ def main():
     st.title('SQL ChatBot: Insurance')
 
  # Display a brief summary message with typing effect
-    summary_message = "Welcome to the SnowSQL ChatBot!\nThis chatbot can assist you with generating SQL queries, executing them, and displaying the results."
+    summary_message = "Welcome to the SnowSQL ChatBot!\nThis chatbot can assist you with generating and executing SQL queries"
     typing_placeholder = st.empty()
     
     lines = summary_message.split('\n')
