@@ -29,12 +29,14 @@ def main():
     )
     st.title('SQL ChatBot: Insurance')
 
-    # Display a brief summary message with typing effect
+ # Display a brief summary message with typing effect
     summary_message = "Welcome to the SnowSQL ChatBot! This chatbot can assist you with generating SQL queries, executing them, and displaying the results."
     typing_placeholder = st.empty()
-    for char in summary_message:
-        typing_placeholder.text(char)
-        time.sleep(0.05)  # Adjust the sleep duration for typing speed
+    
+    words = summary_message.split()
+    for word in words:
+        typing_placeholder.text(" ".join(words[:words.index(word) + 1]))
+        time.sleep(0.3)  # Adjust the sleep duration for typing speed
 
     # Input text area for entering the prompt
     if 'step' not in st.session_state:
