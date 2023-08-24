@@ -29,23 +29,6 @@ def main():
     )
     st.title('SQL ChatBot: Insurance')
     
-    # Display a brief summary message with typing effect
-    summary_message = "Welcome to the SnowSQL ChatBot!\nThis chatbot can assist you with generating and executing SQL queries"
-    typing_placeholder = st.empty()
-    
-    lines = summary_message.split('\n')
-    for line_index, line in enumerate(lines):
-        words = line.split()
-        for word in words:
-            typing_placeholder.text(" ".join(words[:words.index(word) + 1]))
-            time.sleep(0.2)  # Adjust the sleep duration for typing speed
-            if words.index(word) < len(words) - 1:
-                typing_placeholder.text(" ")
-                time.sleep(0.1)  # Add a shorter pause between words
-        if line_index < len(lines) - 1:
-            typing_placeholder.text("\n")
-            time.sleep(0.1)  # Add a shorter pause between lines
-
     # Input text area for entering the prompt
     if 'step' not in st.session_state:
         st.session_state.step = 1
@@ -95,7 +78,6 @@ def main():
         st.subheader("Result Table:")
         st.dataframe(st.session_state.result, width=1500)
         st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
-        st.session_state.result = None
         st.session_state.query = None
         if st.button('Reload'):
             st.write("Are you sure? (PRESS Reload Again)")
