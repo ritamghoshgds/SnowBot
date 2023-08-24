@@ -22,7 +22,32 @@ def authenticate(username, password):
 
 # Streamlit App
 def main():
-    st.markdown(
+    st.markdown("""
+        <style>
+        .custom-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        </style>
+        """,unsafe_allow_html=True)
+    # Check if the user is authenticated, show login if not
+    if 'authenticated' not in st.session_state:
+        st.session_state.authenticated = False
+
+    if not st.session_state.authenticated:
+        st.title("Login")
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        if st.button("Login"):
+            st.write("Click again to Hide")
+            if authenticate(username, password):
+                st.session_state.authenticated = True
+            else:
+                st.error("Authentication failed!")
+
+    # Main content
+    if st.session_state.authenticated:
+        st.markdown(
         """
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>
@@ -55,33 +80,7 @@ def main():
         </style>
         """,
         unsafe_allow_html=True
-    )
-    
-    # Check if the user is authenticated, show login if not
-    if 'authenticated' not in st.session_state:
-        st.session_state.authenticated = False
-
-    if not st.session_state.authenticated:
-        st.markdown("""
-        <style>
-        .custom-icon {
-            font-size: 24px;
-            cursor: pointer;
-        }
-        </style>
-        """,unsafe_allow_html=True)
-        st.title("Login")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        if st.button("Login"):
-            st.write("Click again to Hide")
-            if authenticate(username, password):
-                st.session_state.authenticated = True
-            else:
-                st.error("Authentication failed!")
-
-    # Main content
-    if st.session_state.authenticated:
+        )
         st.sidebar.title("Navigation")
         page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
         if page == "Search":
