@@ -62,6 +62,14 @@ def main():
         st.session_state.authenticated = False
 
     if not st.session_state.authenticated:
+        st.markdown("""
+        <style>
+        .custom-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        </style>
+        """,unsafe_allow_html=True)
         st.title("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
