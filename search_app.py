@@ -38,7 +38,7 @@ def main():
         words = line.split()
         for word in words:
             typing_placeholder.text(" ".join(words[:words.index(word) + 1]))
-            time.sleep(0.3)  # Adjust the sleep duration for typing speed
+            time.sleep(0.2)  # Adjust the sleep duration for typing speed
             if words.index(word) < len(words) - 1:
                 typing_placeholder.text(" ")
                 time.sleep(0.1)  # Add a shorter pause between words
