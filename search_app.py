@@ -91,7 +91,7 @@ def main():
         st.download_button(
             label="Download CSV",
             data=csv,
-            file_name=f"search_output_{st.session_state.count}.csv",
+            file_name="search_output.csv",
             key=random.random()
         )
         st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
