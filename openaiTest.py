@@ -27,8 +27,8 @@ def generate_code(user_input):
     # Define the instruction for the model
     instruction = """1. Please generate the SQL code snippet required for the given task. 
     2. The whole code snippet must be enclosed within 2 '```' symbol. 
-    3. Remember all the tables and their column names. 
-    4. Include a few additional coulmns related to given attributes.
+    3. Column and table names should be accurate. 
+    4. Query must be accurate and executable.
     5. Please use ChatGPT 4.0.
     6. Use minimum SQL Joins and group by."""
 
