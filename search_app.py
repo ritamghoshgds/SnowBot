@@ -67,7 +67,7 @@ def main():
                 loading_placeholder.empty()
                 st.success("Task Completed!")
                 st.session_state.done2 = True
-        if st.button("No"):
+        else if st.button("No"):
             st.write("Sure you don't? (Press No Again)")
             st.session_state.step = 1
 
