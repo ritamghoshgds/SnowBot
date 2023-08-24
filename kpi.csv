@@ -43,7 +43,7 @@ FROM percentage_renewed;"
 Average Premium per Policy,"SELECT (SUM(AMOUNT) / COUNT(DISTINCT POLICY_ID)) 
 AS Average_Premium_per_Policy
 FROM DATA.PREMIUMPAYMENTS;"
-Loss Adjustment Expense Ratio (LAE Ratio),"SELECT
+Loss Adjustment Expense Ratio,"SELECT
   SUM(CH.AMOUNT) AS Total_Loss_Adjustment_Expenses,
   SUM(C.AMOUNT) AS Total_Claims_Amount,
   (SUM(CH.AMOUNT) / SUM(C.AMOUNT)) * 100 AS Adjusted_Claims_Ratio
@@ -61,7 +61,7 @@ Average Response Time for Claims Processing,"SELECT AVG(DATEDIFF('day', C.CLAIM_
 FROM CLAIMS C
 JOIN CLAIMSHISTORY CH ON C.CLAIM_ID = CH.CLAIM_ID
 "
-Average Customer Lifetime Value (CLV),"SELECT SUM(RE.RENEWAL_AMOUNT) / COUNT(DISTINCT RE.POLICY_ID) AS RenewalPremiumToPoliciesRatio
+Average Customer Lifetime Value,"SELECT SUM(RE.RENEWAL_AMOUNT) / COUNT(DISTINCT RE.POLICY_ID) AS RenewalPremiumToPoliciesRatio
 FROM RENEWALS RE;"
 Average New Business Premiums,"SELECT p.POLICY_NUMBER, p.START_DATE, p.END_DATE, pp.POLICY_ID, SUM(pp.AMOUNT) AS TOTAL_PREMIUM
 FROM POLICY p
