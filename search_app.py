@@ -36,7 +36,7 @@ def main():
     lines = summary_message.split('\n')
     for line in lines:
         typing_placeholder.text(line)
-        time.sleep(0.3)  # Adjust the sleep duration for typing speed
+        time.sleep(0.5)  # Adjust the sleep duration for typing speed
         if line != lines[-1]:
             typing_placeholder.text(line + "\n\n")
             time.sleep(0.1)  # Add a shorter pause between lines
