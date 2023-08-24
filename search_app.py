@@ -28,17 +28,8 @@ def main():
         unsafe_allow_html=True
     )
     st.title('SQL ChatBot: Insurance')
-
-    # Input text area for entering the prompt
-    if 'step' not in st.session_state:
-        st.session_state.step = 1
-
-    if st.session_state.step == 1:
-        # Input text area for entering the prompt
-        last_prompt = st.session_state.get('prompt', "")
-        prompt = st.text_input("Enter your prompt here", value=last_prompt)
-        
-     # Display a brief summary message with typing effect
+    
+    # Display a brief summary message with typing effect
     summary_message = "Welcome to the SnowSQL ChatBot!\nThis chatbot can assist you with generating and executing SQL queries"
     typing_placeholder = st.empty()
     
@@ -54,12 +45,20 @@ def main():
         if line_index < len(lines) - 1:
             typing_placeholder.text("\n")
             time.sleep(0.1)  # Add a shorter pause between lines
+
+    # Input text area for entering the prompt
+    if 'step' not in st.session_state:
+        st.session_state.step = 1
+
+    if st.session_state.step == 1:
+        # Input text area for entering the prompt
+        last_prompt = st.session_state.get('prompt', "")
+        prompt = st.text_input("Enter your prompt here", value=last_prompt)
             
         # Button to send the prompt
         if st.button('Send'):
             st.session_state.step = 2
             st.session_state.prompt = prompt
-
 
     if st.session_state.step == 2:
         if 'done' not in st.session_state or st.session_state.done == False:
@@ -84,6 +83,7 @@ def main():
                 loading_placeholder.empty()
                 st.success("Task Completed!")
                 st.session_state.done2 = True
+                
         elif st.button("No"):
             st.write("Sure you don't? (Press No Again)")
             st.session_state.step = 1
@@ -95,6 +95,8 @@ def main():
         st.subheader("Result Table:")
         st.dataframe(st.session_state.result, width=1500)
         st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
+        st.session_state.result = None
+        st.session_state.query = None
         if st.button('Reload'):
             st.write("Are you sure? (PRESS Reload Again)")
             st.session_state.step = 1
