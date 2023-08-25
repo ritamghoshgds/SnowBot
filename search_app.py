@@ -22,11 +22,14 @@ def execute_query(query):
 def main():
     st.markdown(
         """
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>
             section.main.css-uf99v8.ea3mdgi5
                 {background-color: #2E2E38;}
             [data-testid="stText"] {
                 color: #C4C4CD;
+                margin-bottom: -10px;
+                font-size: 2.3vh;
             }
         </style>
         """,
@@ -40,6 +43,7 @@ def main():
     st.text("4. If you approve the query, click the 'Execute' button to execute it.")
     st.text("5. The result table will be displayed below. You can review the query results.")
     st.text("6. If you want to refresh the prompt and start over, click the 'Reload' button.")
+    st.text("")
     
     # Input text area for entering the prompt
     if 'step' not in st.session_state:
