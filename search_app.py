@@ -29,7 +29,7 @@ def main():
             [data-testid="stText"] {
                 color: #C4C4CD;
                 margin-bottom: -10px;
-                font-size: 2.3vh;
+                font-size: 2.1vh;
             }
         </style>
         """,
