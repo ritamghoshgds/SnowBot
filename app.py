@@ -36,7 +36,7 @@ def main():
         st.session_state.authenticated = False
 
     if not st.session_state.authenticated:
-        st.title("Login")
+        st.title("Login to Snowbot")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
@@ -90,7 +90,7 @@ def main():
             kpi_page.kpi_page()
         logout_button = st.sidebar.button("Logout")
         if logout_button:
-            st.sidebar.write('Are you sure you want to logout?')
+            st.sidebar.write('Press again to logout')
             st.session_state.authenticated = False
 
 if __name__ == "__main__":
