@@ -23,14 +23,24 @@ def authenticate(username, password):
 # Streamlit App
 def main():
     st.markdown(
-    """
-    <style>
-    .custom-icon {
-        font-size: 24px;
-        cursor: pointer;
-    }
-    </style>
-    """,unsafe_allow_html=True)
+        """
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+        .custom-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        section{
+            background-color: #2E2E38;
+        }
+        #login-to-snowbot{
+            color: #FFE600;
+        }
+        p { color: #F6F6FA; }
+        button p { color: #000; }
+        </style>     
+        """, unsafe_allow_html=True)
+    
     # Check if the user is authenticated, show login if not
     if 'authenticated' not in st.session_state:
         st.session_state.authenticated = False
