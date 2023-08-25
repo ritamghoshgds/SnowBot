@@ -95,7 +95,7 @@ def main():
         #if st.session_state.counter:
             #st.write("Please try again")
         #else:
-        st.dataframe(st.session_state.result, width=1500)
+        #st.dataframe(st.session_state.result, width=1500)
         df = pd.DataFrame(st.session_state.result)
         csv = df.to_csv()
         st.download_button(
