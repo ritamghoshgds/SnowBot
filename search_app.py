@@ -15,7 +15,7 @@ def execute_query(query):
     try:
         result = snowflake_connector.fetch_and_display_data(query)
     except:
-        result = "Error please try again"
+        result = pd.DataFrame({0:["Error"]})
     return result
     
 # Main Streamlit app
@@ -73,19 +73,16 @@ def main():
             if 'done2' not in st.session_state or st.session_state.done2 == False:
                 loading_placeholder = st.empty()
                 loading_placeholder.text("Loading...")
-                st.session_state.result = execute_query(st.session_state.query)
-                if type(st.session_state.result)!=str:               
-                    df = pd.DataFrame(st.session_state.result)
-                    st.session_state.counter = False
-                    #if df.empty:
-                    #st.session_state.counter = True
-                    loading_placeholder.empty()
-                    st.success("Task Completed!")
-                    st.session_state.done2 = True
-                    st.session_state.step = 3
-                else:
-                    return df
-                    
+                st.session_state.result = execute_query(st.session_state.query)             
+                df = pd.DataFrame(st.session_state.result)
+                st.session_state.counter = False
+                #if df.empty:
+                #st.session_state.counter = True
+                loading_placeholder.empty()
+                st.success("Task Completed!")
+                st.session_state.done2 = True
+                st.session_state.step = 3
+
         elif st.button("No"):
             st.write("Sure you don't? (Press No Again)")
             st.session_state.step = 1
