@@ -15,7 +15,7 @@ def execute_query(query):
     try:
         result = snowflake_connector.fetch_and_display_data(query)
     except:
-        result = pd.DataFrame()
+        result = pd.DataFrame({0:"Error"})
     return result
     
 # Main Streamlit app
@@ -77,8 +77,8 @@ def main():
                 st.session_state.result = execute_query(st.session_state.query)
                 df = pd.DataFrame(st.session_state.result)
                 st.session_state.counter = False
-                if df.empty:
-                    st.session_state.counter = True
+               #if df.empty:
+                    #st.session_state.counter = True
                 loading_placeholder.empty()
                 st.success("Task Completed!")
                 st.session_state.done2 = True
@@ -92,24 +92,24 @@ def main():
     if st.session_state.step == 3:
         st.session_state.done2 = False
         st.subheader("Result Table:")
-        if st.session_state.counter:
-            st.write("Please try again")
-        else:
-            st.dataframe(st.session_state.result, width=1500)
-            df = pd.DataFrame(st.session_state.result)
-            csv = df.to_csv()
-            st.download_button(
-                label="Download CSV",
-                data=csv,
-                file_name="search_output.csv",
-                key=random.random()
-            )
-            st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
-            if st.button('Reload'):
-                st.session_state.result = None
-                st.session_state.query = None
-                st.write("Are you sure? (PRESS Reload Again)")
-                st.session_state.step = 1
+        #if st.session_state.counter:
+            #st.write("Please try again")
+        #else:
+        st.dataframe(st.session_state.result, width=1500)
+        df = pd.DataFrame(st.session_state.result)
+        csv = df.to_csv()
+        st.download_button(
+            label="Download CSV",
+            data=csv,
+            file_name="search_output.csv",
+            key=random.random()
+        )
+        st.write("Press reload: to REFRESH prompt results or GENERATE NEW one!")
+        if st.button('Reload'):
+            st.session_state.result = None
+            st.session_state.query = None
+            st.write("Are you sure? (PRESS Reload Again)")
+            st.session_state.step = 1
 
 if __name__ == "__main__":
     main()
