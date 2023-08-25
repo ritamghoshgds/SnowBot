@@ -40,14 +40,14 @@ def main():
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
-            st.write("Click again to Hide")
+            st.write("Click again to Proceed")
             if authenticate(username, password):
                 st.session_state.authenticated = True
             else:
                 st.error("Authentication failed!")
 
     # Main content
-    if st.session_state.authenticated:
+    elif st.session_state.authenticated:
         st.markdown(
         """
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
