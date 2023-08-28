@@ -14,9 +14,10 @@ def process_prompt(prompt):
 def execute_query(query):
     try:
         result = snowflake_connector.fetch_and_display_data(query)
-    except:
-        result = pd.DataFrame({0:["Error"]})
-    return result
+        return result
+    except Exception as e:
+        st.error("An error occurred while executing the query:")
+        st.error(str(e))
     
 # Main Streamlit app
 def main():
