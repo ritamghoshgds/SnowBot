@@ -37,12 +37,11 @@ def main():
     )
     st.title('Snowbot')
     st.markdown("### How to Use the Search Bot")
-    st.text("1. Enter your query prompt in the text input box provided.")
-    st.text("2. Click the 'Send' button to generate the SQL query based on your prompt.")
-    st.text("3. The generated SQL query will be displayed. Review it to ensure it matches your intent.")
-    st.text("4. If you approve the query, click the 'Execute' button to execute it.")
-    st.text("5. The result table will be displayed below. You can review the query results.")
-    st.text("6. If you want to refresh the prompt and start over, click the 'Reload' button.")
+    st.text("1. Enter your prompt in the input box and click 'Send'")
+    st.text("2. The generated SQL query will be displayed below.")
+    st.text("3. If you approve the query, click the 'Execute' button to execute it.")
+    st.text("4. The result table will be displayed below.")
+    st.text("5.click the 'Reload' button to start over.")
     st.text("")
     
     # Input text area for entering the prompt
