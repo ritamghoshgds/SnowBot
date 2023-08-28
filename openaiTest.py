@@ -5,7 +5,7 @@ import snowflake_connector as sc
 #     apiKey = key.read()
 sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;")
 tableStructText = sch['SCHEMA_DETAILS'][0].replace('{}','[]')
-tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables, Only Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
+tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables only, Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
 openai.api_key = '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'
 
 def find_SQL_substring(main_string):
@@ -25,12 +25,13 @@ def generate_code(user_input):
     system_message = f"User: {user_input}\nAssistant:"
 
     # Define the instruction for the model
-    instruction = """1. Please generate the SQL code snippet required for the given task. 
+    instruction = """1. Please generate the SQL code snippet required for the given task using only the columns that exist in the tables.. 
     2. The whole code snippet must be enclosed within 2 '```' symbol. 
     3. Column and table names should be accurate and must be from the "DATA" schema. 
-    4. Query must be accurate, executable and not too long.
-    5. Please use ChatGPT 4.0.
-    6. Use minimum SQL Joins and group by."""
+    4. Do not make your own columns, only use the ones that are in the table
+    5. Query must be accurate, executable and not too long.
+    6. Use minimum SQL Joins and group by.
+    7. Use Chat GPT 4.0."""
 
     # Generate the code by sending the conversation and instruction to the model
     response = openai.ChatCompletion.create(
