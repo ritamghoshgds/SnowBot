@@ -41,7 +41,7 @@ def main():
     st.text("2. The generated SQL query will be displayed below.")
     st.text("3. If you approve the query, click the 'Execute' button to execute it.")
     st.text("4. The result table will be displayed below.")
-    st.text("5.click the 'Reload' button to start over.")
+    st.text("5. Click the 'Reload' button to start over.")
     st.text("")
     
     # Input text area for entering the prompt
