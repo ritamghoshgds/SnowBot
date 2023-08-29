@@ -6,7 +6,7 @@ import snowflake_connector as sc
 sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;")
 tableStructText = sch['SCHEMA_DETAILS'][0].replace('{}','[]')
 tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables only, Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
-openai.api_key = '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'
+openai.api_key = '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'
 
 def find_SQL_substring(main_string):
     start_index = main_string.find('```') + 7
