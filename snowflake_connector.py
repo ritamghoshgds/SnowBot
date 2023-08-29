@@ -28,11 +28,11 @@ def fetch_and_display_data(query):
 
         cursor.execute(query)
         # Get the status of the query
-        query_status = cursor.get_query_status()
+        # query_status = cursor.get_query_status()
 
-        # If the query has an error, raise an exception
-        if query_status.status != "SUCCESS":
-            raise Exception(f"Error executing query: {query_status.message}")
+        # # If the query has an error, raise an exception
+        # if query_status.status != "SUCCESS":
+        #     raise Exception(f"Error executing query: {query_status.message}")
 
         data = cursor.fetchall()
         columns = [desc[0] for desc in cursor.description]
