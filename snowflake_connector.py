@@ -32,10 +32,10 @@ def fetch_and_display_data(query):
         return df
     
     except snowflake.connector.errors.ProgrammingError as e:
-        return f"Error executing query: {e}"
+        return pd.DataFrame({0:[str(f"Query didn't produce any data or it has a syntax issue {e}")]})
     
     except Exception as e:
-        return f"An error occurred: {e}"
+        return pd.DataFrame({0:[str(f"Query didn't produce any data or it has a syntax issue {e}")]})
     
     finally:
         cursor.close()
