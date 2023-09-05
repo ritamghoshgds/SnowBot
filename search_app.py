@@ -16,8 +16,7 @@ def execute_query(query):
         result = snowflake_connector.fetch_and_display_data(query)
         return result
     except Exception as e:
-        st.error("An error occurred while executing the query:")
-        st.error(str(e))
+        return pd.DataFrame()
     
 # Main Streamlit app
 def main():
@@ -77,8 +76,7 @@ def main():
             if 'done2' not in st.session_state or st.session_state.done2 == False:
                 loading_placeholder = st.empty()
                 loading_placeholder.text("Loading...")
-                st.session_state.result = execute_query(st.session_state.query)             
-                df = pd.DataFrame(st.session_state.result)
+                st.session_state.result = execute_query(st.session_state.query) 
                 st.session_state.counter = False
                 #if df.empty:
                 #st.session_state.counter = True
@@ -100,7 +98,10 @@ def main():
             #st.write("Please try again")
         #else:
         st.dataframe(st.session_state.result, width=1500)
-        df = pd.DataFrame(st.session_state.result)
+        try:
+            df = pd.DataFrame(st.session_state.result)
+        except:
+            df = pd.DataFrame()
         csv = df.to_csv()
         st.download_button(
             label="Download CSV",
