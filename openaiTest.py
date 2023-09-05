@@ -5,8 +5,12 @@ import snowflake_connector as sc
 #     apiKey = key.read()
 sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;")
 tableStructText = sch['SCHEMA_DETAILS'][0].replace('{}','[]')
+print(tableStructText)
 tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables only, Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
-openai.api_key = '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'
+print("-------------------")
+print(tableStructText)
+print("-----------------------")
+openai.api_key = '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'
 
 def find_SQL_substring(main_string):
     start_index = main_string.find('```') + 7
@@ -49,7 +53,6 @@ def generate_code(user_input):
 
 # Generate code snippet based on user input
 #user_input = "In europe continent how many users are there?"
-
 
 def Main2(input):
     code_snippet = generate_code(tableStructText.format(input))
