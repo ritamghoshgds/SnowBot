@@ -10,7 +10,7 @@ tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance 
 print("-------------------")
 print(tableStructText)
 print("-----------------------")
-openai.api_key = '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'
+openai.api_key = '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'
 
 def find_SQL_substring(main_string):
     start_index = main_string.find('```') + 7
