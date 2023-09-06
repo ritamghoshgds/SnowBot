@@ -1,15 +1,16 @@
 import time
 import streamlit as st
-import openaiTest
 import snowflake_connector
 import csv
 import pandas as pd
 import random
+username=""
+password=""
 
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
-def execute_query(query):
-    result = snowflake_connector.fetch_and_display_data(query)
+def execute_query(query,username,password):
+    result = snowflake_connector.fetch_and_display_data(query,username,password)
     return result
 
 df = pd.read_csv("kpi.csv")
@@ -19,7 +20,11 @@ def fetch_query(prompt):
     return filtered_data['Query'].values[0]
 
 # Page 2: KPI Page
-def kpi_page():
+def kpi_page(user,passw):
+    global username
+    username = user
+    global password
+    password=passw
     if 'query_outputs' not in st.session_state:
         st.session_state.query_outputs = []
     st.markdown(
@@ -67,7 +72,7 @@ def kpi_page():
                 if st.session_state.kpires[button_index] == "":
                     st.session_state.kpires[button_index] = fetch_query(button_text)
                 st.session_state.query_outputs.append(button_text + ":\n" + st.session_state.kpires[button_index])
-                result = execute_query(st.session_state.kpires[button_index])
+                result = execute_query(st.session_state.kpires[button_index],username,password)
                 st.session_state.query_outputs.append(result)
         st.markdown("</div>", unsafe_allow_html=True)
 
