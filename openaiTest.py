@@ -1,16 +1,14 @@
 import openai
 import snowflake_connector as sc
-
 # with open("API_OPENAI.txt",'r') as key:
 #     apiKey = key.read()
-sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;")
+sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;","MitadruChakraborty","Abcd1234@")
 tableStructText = sch['SCHEMA_DETAILS'][0].replace('{}','[]')
-print(tableStructText)
 tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables only, Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
-print("-------------------")
-print(tableStructText)
-print("-----------------------")
-openai.api_key = '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'
+# print("-------------------")
+# print(tableStructText)
+# print("-----------------------")
+#openai.api_key = ''
 
 def find_SQL_substring(main_string):
     start_index = main_string.find('```') + 7
