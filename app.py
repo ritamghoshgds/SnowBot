@@ -1,24 +1,32 @@
 import time
 import streamlit as st
 import snowflake_connector
-import search_app, kpi_page
-
+import search_app,kpi_page
+username=""
+password=""
 # Function to process the prompt and return the query
-def process_prompt(prompt):
-    code = openaiTest.Main2(prompt)
-    return code
+# def process_prompt(prompt):
+#     code = openaiTest.Main2(prompt)
+#     return code
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
-def execute_query(query):
-    result = snowflake_connector.fetch_and_display_data(query)
-    return result
+# def execute_query(query):
+#     result = snowflake_connector.fetch_and_display_data(query)
+#     return result
 
 # Function to simulate user authentication
 def authenticate(username, password):
     # Replace with your authentication logic
-    if username == "LLMChatbot" and password == "snowflake":
+    # if username == "LLMChatbot" and password == "snowflake":
+    #     return True
+    # return False
+    # My aim here is to write code that takes the username and password and runs the query in the execte query function using these credentials and check if these credentials have snowflake access or not ,
+    #if that account does not have access then we return authenticate variable as false and if it can return query result then we return it as true
+    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",username,password)
+    if var.iloc[0,0]=="Incorrect username or password was specified.":
+        return False
+    else:
         return True
-    return False
 
 # Streamlit App
 def main():
@@ -47,8 +55,12 @@ def main():
 
     if not st.session_state.authenticated:
         st.title("Login to Snowbot")
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
+        global username
+        username= st.text_input("Username")
+        st.session_state.user=username
+        global password
+        password=st.text_input("Password", type="password")
+        st.session_state.passw=password
         if st.button("Login"):
             st.write("Click again to Proceed")
             if authenticate(username, password):
@@ -95,9 +107,9 @@ def main():
         st.sidebar.title("Navigation")
         page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
         if page == "Search":
-            search_app.main()
+            search_app.main(st.session_state.user,st.session_state.passw)
         elif page == "Popular KPIs":
-            kpi_page.kpi_page()
+            kpi_page.kpi_page(st.session_state.user,st.session_state.passw)
         logout_button = st.sidebar.button("Logout")
         if logout_button:
             st.sidebar.write('Press again to logout')
