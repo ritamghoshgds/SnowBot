@@ -20,6 +20,7 @@ def fetch_and_display_data(query,snowflake_user,snowflake_password):
             role="LLM_RL"
         )
         cursor = conn.cursor()
+        print(snowflake_user)
 
     except snowflake.connector.errors.DatabaseError as e:
         return (pd.DataFrame({0:[str(f"Incorrect username or password was specified.")]}))
