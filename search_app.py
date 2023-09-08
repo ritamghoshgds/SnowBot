@@ -7,25 +7,28 @@ import random
 
 username=""
 password=""
+role=""
 # Function to process the prompt and return the query
 def process_prompt(prompt):
     code = openaiTest.Main2(prompt)
     return code
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
-def execute_query(query,username,password):
+def execute_query(query,user,passw,rl):
     try:
-        result = snowflake_connector.fetch_and_display_data(query,username,password)
+        result = snowflake_connector.fetch_and_display_data(query,user,passw,rl)
         return result
     except Exception as e:
         return pd.DataFrame()
     
 # Main Streamlit app
-def main(user,passw):
+def main(user,passw,rl):
     global username
     username = user
     global password
     password = passw
+    global role
+    role = rl
     st.markdown(
         """
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -82,7 +85,7 @@ def main(user,passw):
             if 'done2' not in st.session_state or st.session_state.done2 == False:
                 loading_placeholder = st.empty()
                 loading_placeholder.text("Loading...")
-                st.session_state.result = execute_query(st.session_state.query,username,password)
+                st.session_state.result = execute_query(st.session_state.query,username,password,role)
                 st.session_state.counter = False
                 #if df.empty:
                 #st.session_state.counter = True
@@ -123,4 +126,4 @@ def main(user,passw):
             st.session_state.step = 1
 
 if __name__ == "__main__":
-    main(username,password)
+    main(username,password,role)
