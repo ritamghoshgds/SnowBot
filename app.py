@@ -4,6 +4,7 @@ import snowflake_connector
 import search_app,kpi_page
 username=""
 password=""
+role=""
 # Function to process the prompt and return the query
 # def process_prompt(prompt):
 #     code = openaiTest.Main2(prompt)
@@ -15,14 +16,14 @@ password=""
 #     return result
 
 # Function to simulate user authentication
-def authenticate(user, passw):
+def authenticate(user, passw,rl):
     # Replace with your authentication logic
     # if username == "LLMChatbot" and password == "snowflake":
     #     return True
     # return False
     # My aim here is to write code that takes the username and password and runs the query in the execte query function using these credentials and check if these credentials have snowflake access or not ,
     #if that account does not have access then we return authenticate variable as false and if it can return query result then we return it as true
-    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw)
+    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw,rl)
     if var.iloc[0,0]=="Incorrect username or password was specified.":
         return False
     else:
@@ -61,9 +62,12 @@ def main():
         global password
         password=st.text_input("Password", type="password")
         st.session_state.passw=password
+        global role
+        role = st.text_input("Role")
+        st.session_state.rl=role
         if st.button("Login"):
             st.write("Click again to Proceed")
-            if authenticate(username, password):
+            if authenticate(username, password,role):
                 st.session_state.authenticated = True
             else:
                 st.error("Authentication failed!")
@@ -107,9 +111,9 @@ def main():
         st.sidebar.title("Navigation")
         page = st.sidebar.radio("Go to", ["Search", "Popular KPIs"])
         if page == "Search":
-            search_app.main(st.session_state.user,st.session_state.passw)
+            search_app.main(st.session_state.user,st.session_state.passw,st.session_state.rl)
         elif page == "Popular KPIs":
-            kpi_page.kpi_page(st.session_state.user,st.session_state.passw)
+            kpi_page.kpi_page(st.session_state.user,st.session_state.passw,st.session_state.rl)
         logout_button = st.sidebar.button("Logout")
         if logout_button:
             st.sidebar.write('Press again to logout')
