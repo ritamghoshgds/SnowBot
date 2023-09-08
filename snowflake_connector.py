@@ -1,9 +1,11 @@
 import snowflake.connector
 import pandas as pd
 
-def fetch_and_display_data(query,snowflake_user,snowflake_password):
+
+def fetch_and_display_data(query,snowflake_user,snowflake_password,snowflake_role):
     # snowflake_user = "MitadruChakraborty"
     # snowflake_password = "Abcd1234@"
+    # snowflake_role = "LLM_RL"
     snowflake_account = "eygds-lnd_dna_az_1"
     snowflake_warehouse = "LLM_WH"
     snowflake_database = "LLM_CHATBOT"
@@ -17,13 +19,13 @@ def fetch_and_display_data(query,snowflake_user,snowflake_password):
             warehouse=snowflake_warehouse,
             database=snowflake_database,
             schema=snowflake_schema,
-            role="LLM_RL"
+            role=snowflake_role
         )
         cursor = conn.cursor()
-        print(snowflake_user)
-
+        print(snowflake_role)
+        print("Problem here")
     except snowflake.connector.errors.DatabaseError as e:
-        return (pd.DataFrame({0:[str(f"Incorrect username or password was specified.")]}))
+        return (pd.DataFrame({0:[str(f"Incorrect username,password or role was specified.")]}))
 
     try:
         if query.strip() == '':
@@ -46,4 +48,4 @@ def fetch_and_display_data(query,snowflake_user,snowflake_password):
         cursor.close()
         conn.close()
 
-# print(fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;").iloc[0,0])
+# print(fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;","MitadruChakraborty","Abcd1234@","LLM_RL").iloc[0,0])
