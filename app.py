@@ -15,14 +15,14 @@ password=""
 #     return result
 
 # Function to simulate user authentication
-def authenticate(username, password):
+def authenticate(user, passw):
     # Replace with your authentication logic
     # if username == "LLMChatbot" and password == "snowflake":
     #     return True
     # return False
     # My aim here is to write code that takes the username and password and runs the query in the execte query function using these credentials and check if these credentials have snowflake access or not ,
     #if that account does not have access then we return authenticate variable as false and if it can return query result then we return it as true
-    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",username,password)
+    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw)
     if var.iloc[0,0]=="Incorrect username or password was specified.":
         return False
     else:
