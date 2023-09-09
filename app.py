@@ -24,7 +24,7 @@ def authenticate(user, passw,rl):
     # My aim here is to write code that takes the username and password and runs the query in the execte query function using these credentials and check if these credentials have snowflake access or not ,
     #if that account does not have access then we return authenticate variable as false and if it can return query result then we return it as true
     var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw,rl)
-    if var.iloc[0,0]=="Incorrect username or password was specified.":
+    if var.iloc[0,0]=="Incorrect username,password or role was specified.":
         return False
     else:
         return True
