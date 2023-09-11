@@ -9,8 +9,8 @@ username=""
 password=""
 role=""
 # Function to process the prompt and return the query
-def process_prompt(prompt):
-    code = openaiTest.Main2(prompt)
+def process_prompt(prompt,user,passw,rl):
+    code = openaiTest.Main2(prompt,user,passw,rl)
     return code
 
 # Function to execute the SQL query and get the result table (replace with your actual implementation)
@@ -71,7 +71,7 @@ def main(user,passw,rl):
         if 'done' not in st.session_state or st.session_state.done == False:
             loading_placeholder = st.empty()
             loading_placeholder.text("Loading...")
-            st.session_state.query = process_prompt(st.session_state.prompt)
+            st.session_state.query = process_prompt(st.session_state.prompt,username,password,role)
             loading_placeholder.empty()
             st.success("Task Completed!")
             st.session_state.done = True
