@@ -50,8 +50,8 @@ def generate_code(user_input):
 # Generate code snippet based on user input
 #user_input = "In europe continent how many users are there?"
 
-def Main2(input):
-    sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;","MitadruChakraborty","Abcd1234@","LLM_RL")
+def Main2(input,user,passw,rl):
+    sch = sc.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw,rl)
     tableStructText = sch['SCHEMA_DETAILS'][0].replace('{}','[]')
     tableStructText = tableStructText + "\n above is the DDL of Snowflake insurance data model. \n Using Given tables only, Generate Snowflake SQL query to extract multi-column table related to this prompt: {}"
     code_snippet = generate_code(tableStructText.format(input))
