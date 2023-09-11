@@ -2,6 +2,7 @@ import time
 import streamlit as st
 import snowflake_connector
 import search_app,kpi_page
+import random
 username=""
 password=""
 role=""
@@ -23,7 +24,8 @@ def authenticate(user, passw,rl):
     # return False
     # My aim here is to write code that takes the username and password and runs the query in the execte query function using these credentials and check if these credentials have snowflake access or not ,
     #if that account does not have access then we return authenticate variable as false and if it can return query result then we return it as true
-    var=snowflake_connector.fetch_and_display_data("Select GET_DDL('SCHEMA','DATA') AS schema_details;",user,passw,rl)
+    var=snowflake_connector.fetch_and_display_data(f"use role {rl}",user,passw,rl)
+    print(var)
     if var.iloc[0,0]=="Incorrect username,password or role was specified.":
         return False
     else:
@@ -59,18 +61,24 @@ def main():
         global username
         username= st.text_input("Username")
         st.session_state.user=username
+        print(f"1.{st.session_state.user}")
         global password
         password=st.text_input("Password", type="password")
         st.session_state.passw=password
+        print(f"2.{st.session_state.passw}")
         global role
         role = st.text_input("Role")
         st.session_state.rl=role
-        if st.button("Login"):
-            st.write("Click again to Proceed")
-            if authenticate(username, password,role):
-                st.session_state.authenticated = True
+        print(f"3.{st.session_state.rl}")
+        if st.button("Login") :
+            if not role:
+                st.error("Please enter your user role as well")
             else:
-                st.error("Authentication failed!")
+                st.write("Click again to Proceed")
+                if authenticate(username, password,role):
+                    st.session_state.authenticated = True
+                else:
+                    st.error("Authentication failed!")
 
     # Main content
     elif st.session_state.authenticated:
